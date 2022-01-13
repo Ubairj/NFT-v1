@@ -87,6 +87,9 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
         // emit an event to that respect
         emit TokenMinted(receiver, tokenHash, 0);
 
+        // TODO: this might fail, if it does try
+        // mintings = new mintings[](1);
+        mintings[0] =_minting;
     }
 
     /// @notice returns the sale price in ETH for the given quantity.
@@ -102,7 +105,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// only for controller of token
     /// @param receiver - the address of the account receiving the item
     /// @param tokenHash - token hash to mint to the receiver
-    function mint(address receiver, uint256 tokenHash, uint256 quantity) external override onlyController {
+    function mint(uint256 tokenHash, address receiver, uint256 quantity) external override onlyController {
 
         require(tokenData[tokenHash].openState, "cannot mint when tokensale is closed");
         require(tokenData[tokenHash].minted < tokenData[tokenHash].supply, "cannot mint more than supply");
@@ -132,7 +135,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
 
     /// @notice get the token sale price
     /// @return salePrice - the open state of the tokensale
-    function getSalePrice(uint256 tokenHash) external view  override returns (uint256) {
+    function getSalePrice(uint256 tokenHash) external view override returns (uint256) {
         return tokenData[tokenHash].rate;
     }
 
@@ -161,5 +164,16 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @return _list - total list of purchasers
     function minterList() external view override returns (TokenMinting[] memory _list) {
         _list = _mintees;
+    }
+
+    /// @notice get the address of the sole token
+    /// @return token - the address of the sole token
+    function getSaleTokens() external view override returns(address[] memory) {
+
+    }
+
+    /// @notice set sale price
+    function setSalePrice(uint256) external pure override {
+        require(false, "this method is not implemented");
     }
 }

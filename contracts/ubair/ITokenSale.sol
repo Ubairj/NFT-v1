@@ -54,7 +54,10 @@ interface ITokenSale {
     /// @notice set the psale price
     /// only for controller of token
     /// @param _salePrice - the open state of the tokensale
-    function setSalePrice(uint256 _salePrice) external;
+    function setSalePrice(uint256 _salePrice) external view;
+
+    /// @notice set sale price
+    function getSalePrice(uint256 tokenHash) external view returns (uint256); 
 
     /// @notice get the address of the sole token
     /// @return token - the address of the sole token

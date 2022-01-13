@@ -10,7 +10,7 @@ export default async function func(hre: any) {
   const d = hre.deployments.deploy;
   const deploy = hre.deployments.deploy;
 
-  console.log('\n\nNextgem - token collection factory deploy\n');
+  console.log('\n\nNextgem - bank deploy\n');
 
   const owner = await hre.ethers.getSigner();
   const ownerAddress = await owner.getAddress();
@@ -32,11 +32,6 @@ export default async function func(hre: any) {
     'UInt256Set',
     libDeployParams
   );
-  const factorySet = await deploy(
-    'FactorySet',
-    libDeployParams
-  );
-
 
   // deployment params
   const deployParams = {
@@ -45,32 +40,29 @@ export default async function func(hre: any) {
     libraries: {
       AddressSet: addressSet.address,
       UInt256Set: uint256Set.address,
-      FactorySet: factorySet.address,
     },
     args: []
   };
 
   // deploy the contract
-  await deploy('TokenCollectionFactoryDeployer', deployParams);
+  await deploy('MultiToken', deployParams);
 
   // get the dpeloyer
-  const deployer = await getContractAt(
-    'TokenCollectionFactoryDeployer',
-    ( await get('TokenCollectionFactoryDeployer') ).address,
+  const multitokenAddress = ( await get('MultiToken') ).address;
+
+  // deploy the token sale
+  await deploy('TokenSale', deployParams);
+
+  // get the dpeloyer
+  const tokenSale = await getContractAt(
+    'TokenSale',
+    ( await get('TokenSale') ).address,
     owner
   )
 
-  // call the deployer to deploy the token
-  const tx = await deployer.deploy(
-    '0', BigNumber.from('1')
-  );
-  await tx.wait();
-
-  // call the deployment address
-  const deployedAddress = await deployer.deployedToken();
-  if (!deployedAddress) {
-    throw new Error('could not deploy the contract');
-  }
+  // init the tokensale
+  console.log('init the tokensale contract');
+  await tokenSale.initialize(multitokenAddress);
 
 };
-func.tags = ['TokenCollectionFactory'];
+func.tags = ['TokenSale'];
