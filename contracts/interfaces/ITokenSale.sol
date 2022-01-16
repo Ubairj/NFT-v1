@@ -1,90 +1,101 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "./IPurchaseRecordList.sol";
-import "./IToken.sol";
-import "./ITokenPrice.sol";
-
 ///
-/// @notice A token seller is a contract that can sell tokens to a token buyer.
-/// The token buyer can buy tokens from the seller by paying a certain amount
-/// of base currency to receive a certain amount of erc1155 tokens. the number
-/// of tokens that can be bought is limited by the seller - the seller can
-/// specify the maximum number of tokens that can be bought per transaction
-/// and the maximum number of tokens that can be bought in total for a given
-/// address. The seller can also specify the price of erc1155 tokens and how
-/// that price increases per successful transaction.
-interface ITokenSale is IToken {
+/// @dev Interface for the NFT Royalty Standard
+///
+interface ITokenSale {
 
-    /// @notice the settings for the token sale,
-    struct TokenSaleSettings {
 
-        // addresses
-        address contractAddress; // the contract doing the selling
-        address token; // the token being sold
-        uint256 tokenHash; // the token hash being sold. set to 0 to autocreate hash
-
-        // owner and payee
-        address owner; // the owner of the contract
-        address payee; // the payee of the contract
-
-        string symbol; // the symbol of the token
-        string name; // the name of the token
-        string description; // the description of the token
-
-        // open state
-        bool openState; // open or closed
-        uint256 startTime; // block number when the sale starts
-        uint256 endTime; // block number when the sale ends
-
-        // quantities
-        uint256 maxQuantity; // max number of tokens that can be sold
-        uint256 maxQuantityPerSale; // max number of tokens that can be sold per sale
-        uint256 minQuantityPerSale; // min number of tokens that can be sold per sale
-        uint256 maxQuantityPerAccount; // max number of tokens that can be sold per account
-
-        // inital price of the token sale
-        ITokenPrice.TokenPriceData initialPrice;
+    struct TokenData {
+        uint256 id;
+        uint256 supply;
+        uint256 minted;
+        uint256 rate;
+        bool openState;
     }
 
-    /// @notice emitted when a token is purchased
-    event PurchasedToken (
+    struct TokenMinting {
+        address recipient;
+        uint256 tokenHash;
+        uint256 definitonHash;
+    }
 
-        address indexed purchaserAddress,
-        address indexed tokenAddress,
-        uint256 indexed tokenHash,
-        IPurchaseRecordList.PurchaseRecord tokenSale
+    event PayeeChanged(address indexed receiver);
+    event Purchased(address indexed receiver, uint256 tokenHash, uint256 quantity, uint256 price);
+    event TokenMinted(address indexed receiver, uint256 tokenHash, uint256 mintType);
 
-    );
-
-    /// @notice emitted when a token is opened
-    event TokenSaleOpen ( TokenSaleSettings tokenSale );
-
-    /// @notice emitted when a token is opened
-    event TokenSaleClosed ( TokenSaleSettings tokenSale );
-
-    /// @notice emitted when a token is opened
-    event TokenPurchased ( TokenSaleSettings tokenSale, IPurchaseRecordList.PurchaseRecord purchaseRecord );
 
     /// @notice Called to purchase some quantity of a token
     /// @param receiver - the address of the account receiving the item
-    /// @param quantity - the seed
-    /// @return minting th epurchase record
-    function purchase(address receiver, uint256 quantity) external payable returns (IPurchaseRecordList.PurchaseRecord memory minting);
+    /// @param quantity - the quantity to purchase. max 5.
+    function purchase(uint256 tokenId, address receiver, uint256 quantity) external payable returns (TokenMinting[] memory mintings);
 
-    /// @notice Get the token sale settings
-    /// @return settings the token sale settings
-    function getTokenSaleSettings() external view returns (TokenSaleSettings memory settings);
+    /// @notice returns the sale price in ETH for the given quantity.
+    /// @param quantity - the quantity to purchase. max 5.
+    /// @return price - the sale price for the given quantity
+    function salePrice(uint256 tokenId, uint256 quantity) external view returns (uint256 price);
 
-    /// @notice Updates the token sale settings
-    /// @param settings - the token sake settings
-    function updateTokenSaleSettings(TokenSaleSettings memory settings) external;
+    /// @notice Mint a specific tokenhash to a specific address ( up to har-cap limit)
+    /// only for controller of token
+    /// @param receiver - the address of the account receiving the item
+    /// @param tokenHash - token hash to mint to the receiver
+    function mint(uint256 tokenId, address receiver, uint256 tokenHash) external;
 
-    /// @notice Request tokens from the token provider.
-    /// @param _recipient The address of the token receiver.
-    /// @param quantity The amount of erc1155 tokens to buy.
-    /// @return _tokenHashOut The amount of erc1155 tokens that were requested.
-    function request(address _recipient, uint256 quantity)
-        external
-        returns (uint256 _tokenHashOut);
+    /// @notice open / close the tokensale
+    /// only for controller of token
+    /// @param openState - the open state of the tokensale
+    function setOpenState(uint256 tokenId, bool openState) external;
+
+    /// @notice get the token sale open state
+    /// @return openState - the open state of the tokensale
+    function getOpenState(uint256 tokenId) external view returns (bool);
+
+    /// @notice set the psale price
+    /// only for controller of token
+    /// @param _salePrice - the open state of the tokensale
+    function setSalePrice(uint256 _salePrice) external;
+
+    /// @notice get the address of the sole token
+    /// @return token - the address of the sole token
+    function getSaleTokens() external view returns(address[] memory);
+
+    /// @notice get the primary token sale payee
+    /// @return payee_ the token sale payee
+    function getPayee() external view returns (address payee_);
+
+    /// @notice set the primary token sale payee
+    /// @param _payee - the token sale payee
+    function setPayee(address _payee) external;
+
+    /// @notice return the mintee list
+    /// @return _list the token sale payee
+    function minterList() external view returns (TokenMinting[] memory _list);
+
+    /// @notice return the purchaser list
+    /// @return _list the token sale payee
+    function purchaserList() external view returns (TokenMinting[] memory _list);
+
+    /// @notice add a new token type to this token sale.
+    /// only for controller of token
+    /// @param tokenType - the token type definition
+    function addTokenType(TokenData memory tokenType) external;
+
+    /// @notice get the primary token sale payee
+    /// @return tokenData_ the token sale payee
+    function getTokenType(uint256 index) external view returns (TokenData memory tokenData_);
+
+    // /// @notice get the primary token sale payee
+    // /// @return length the token sale payee
+    // function getTokenTypeLength() external view returns (uint256 length);
+
+    // /// @notice get the full list of token data configuration blocks
+    // /// @return tokenDatas_ the token datas
+    // function getTokenTypes() external view returns (TokenData[] memory tokenDatas_);
+
+}
+
+interface IMintable {
+    function mint(address receiver, uint256 tokenHash, uint256 quantity) external;
+    function getMinter() external view returns (address);
 }
