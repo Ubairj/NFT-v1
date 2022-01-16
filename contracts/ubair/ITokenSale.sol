@@ -29,7 +29,7 @@ interface ITokenSale {
     /// @notice Called to purchase some quantity of a token
     /// @param receiver - the address of the account receiving the item
     /// @param quantity - the quantity to purchase. max 5.
-    function purchase(uint256 tokenId, address receiver, uint256 quantity) external payable returns (TokenMinting[] memory mintings);
+    function purchase(uint256 tokenId, address receiver, uint256 quantity) external payable returns (TokenMinting memory mintings);
 
     /// @notice returns the sale price in ETH for the given quantity.
     /// @param quantity - the quantity to purchase. max 5.
@@ -90,11 +90,11 @@ interface ITokenSale {
 
     /// @notice get the primary token sale payee
     /// @return length the token sale payee
-    function getTokenTypeLength() external view returns (uint256 length);
+    //function getTokenTypeLength() external view returns (uint256 length);
 
     /// @notice get the full list of token data configuration blocks
     /// @return tokenDatas_ the token datas
-    function getTokenTypes() external view returns (TokenData[] memory tokenDatas_);
+    //function getTokenTypes() external view returns (TokenData[] memory tokenDatas_);
 
 }
 

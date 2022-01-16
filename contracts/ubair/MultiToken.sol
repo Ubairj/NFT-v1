@@ -39,6 +39,10 @@ Controllable
 
     uint256 private a;
 
+    constructor() {
+        _addController(msg.sender);
+    }
+
     /**
      * @dev See {_setURI}.
      */

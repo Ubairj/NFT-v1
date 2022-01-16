@@ -12,7 +12,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     address private payee;
     address private token;
 
-    TokenData[] private tokenData;
+    mapping(uint256 => TokenData) private tokenData;
 
     TokenMinting[] private _purchasers;
     TokenMinting[] private _mintees;
@@ -35,71 +35,85 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @param tokenType - the token type definition
     function addTokenType(TokenData memory tokenType) external override onlyController{
 
-        tokenData.push(tokenType);
+        tokenData[tokenType.id] = tokenType;
 
     }
 
 
     /// @notice get the primary token sale payee
     /// @return tokenData_ the token sale payee
-    function getTokenType(uint256 index) external view override returns (TokenData memory tokenData_)  {
+    function getTokenType(uint256 tokenhash) external view override returns (TokenData memory tokenData_)  {
 
-        return tokenData[index];
+        return tokenData[tokenhash];
 
     }
 
     /// @notice get the primary token sale payee
-    /// @return length the token sale payee
-    function getTokenTypeLength() external view override returns (uint256 length) {
+    /// @return lrrayength the token sale payee
+    // function getTokenTypeLength() external view override returns (uint256 length) {
 
-        return tokenData.length;
+    //     return tokenData.length;
 
-    }
+    // }
 
-    /// @notice get the full list of token data configuration blocks
-    /// @return tokenDatas_ the token datas
-    function getTokenTypes() external view override returns (TokenData[] memory tokenDatas_){
+    // /// @notice get the full list of token data configuration blocks
+    // /// @return tokenDatas_ the token datas
+    // function getTokenTypes() external view override returns (TokenData[] memory tokenDatas_){
 
-            return tokenData;
+    //         return tokenData;
 
-    }
+    // }
 
     /// @notice Called to purchase some quantity of a token
-    /// @param receiver - the address of the account receiving the item
+    /// @param tokenHash - the token hash .
+    /// @param _receiver - the address of the account receiving the item
     /// @param quantity - the quantity to purchase. max 5.
-    function purchase(uint256 tokenHash, address receiver, uint256 quantity) external payable override returns (TokenMinting[] memory mintings) {
 
+    function purchase(uint256 tokenHash, address _receiver, uint256 quantity) external payable override returns (TokenMinting memory mintings) {
+        address receiver = _receiver;
         TokenData storage _tokenData = tokenData[tokenHash];
         require(_tokenData.id == tokenHash, "invalid object");
 
+        uint256 salePrice_ = _salePrice(tokenHash, quantity);
+
         require(_tokenData.minted + quantity <= _tokenData.supply, "cannot purchase more than supply");
-        require(_tokenData.rate * quantity <= msg.value, "must attach funds to purchase items");
+        require(salePrice_ <= msg.value, "must attach funds to purchase items");
         require(_tokenData.openState, "cannot mint when tokensale is closed");
 
         require(quantity > 0 && quantity <= 3, "cannot purchase more than 3 items");
 
-        // create the receipt for this minting
+        //create the receipt for this minting
         TokenMinting memory _minting = TokenMinting(receiver, tokenHash, 0);
 
         // create a record of this new minting
-        _purchasers.push(_minting);
+        _purchasers.push(TokenMinting(receiver, tokenHash, 0));
+
+        IMintable(token).mint(_receiver, tokenHash, quantity);
 
         // emit an event to that respect
         emit TokenMinted(receiver, tokenHash, 0);
 
         // TODO: this might fail, if it does try
-        // mintings = new mintings[](1);
-        mintings[0] =_minting;
+        //mintings = new mintings[](1);
+        return _minting;
     }
+
 
     /// @notice returns the sale price in ETH for the given quantity.
     /// @param quantity - the quantity to purchase. max 5.
     /// @return price - the sale price for the given quantity
-    function salePrice(uint256 tokenId, uint256 quantity) external view override returns (uint256 price) {
-
-        price = tokenData[tokenId].rate * quantity;
-
+    function _salePrice(uint256 tokenId, uint256 quantity) internal view returns (uint256 price) {
+        TokenData storage _tokenData = tokenData[tokenId];
+        uint256 targetPricing = (_tokenData.rate * quantity) * 10 ** 18;
+        targetPricing = targetPricing / 10;
+        price = targetPricing;
+        return price;
     }
+
+    function salePrice(uint256 tokenId, uint256 quantity) external view override returns (uint256 price) {
+        return _salePrice(tokenId, quantity);
+    }
+
 
     /// @notice Mint a specific tokenhash to a specific address ( up to har-cap limit)
     /// only for controller of token
@@ -107,7 +121,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @param tokenHash - token hash to mint to the receiver
     function mint(uint256 tokenHash, address receiver, uint256 quantity) external override onlyController {
 
-        require(tokenData[tokenHash].openState, "cannot mint when tokensale is closed");
+        require(tokenData[tokenHash].openState == true, "cannot mint when tokensale is closed");
         require(tokenData[tokenHash].minted < tokenData[tokenHash].supply, "cannot mint more than supply");
 
         tokenData[tokenHash].minted += 1;
