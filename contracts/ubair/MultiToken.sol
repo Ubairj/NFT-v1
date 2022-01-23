@@ -10,11 +10,13 @@ import "../token/ProxyRegistry.sol";
 import "../token/ERC1155Owners.sol";
 import "../token/ERC1155Owned.sol";
 import "../token/ERC1155TotalBalance.sol";
+import "../royalties/ERC2981.sol";
 
 
 import "../interfaces/IMultiToken.sol";
 import "../interfaces/IERC1155Mint.sol";
 import "../interfaces/IERC1155Burn.sol";
+import "../interfaces/IERC2981.sol";
 import "../access/Controllable.sol";
 
 /**
@@ -22,8 +24,8 @@ import "../access/Controllable.sol";
  * @notice the multitoken contract. All tokens are printed on this contract. The token has all the capabilities
  * of an erc1155 contract, plus network transfer, royallty tracking and assignment and other features.
  */
+ 
 contract MultiToken is
-
 ERC1155,
 ProxyRegistryManager,
 ERC1155Owners,
@@ -31,6 +33,8 @@ ERC1155Owned,
 ERC1155TotalBalance,
 IMultiToken,
 Controllable
+
+
 {
 
     // to work with token holder and held token lists
@@ -99,6 +103,9 @@ Controllable
             interfaceId == type(IERC1155MetadataURI).interfaceId ||
             super.supportsInterface(interfaceId);
     }
+
+
+
 
     /// @notice override base functionality to process token transfers so as to populate token holders and held tokens lists
     /// @param operator the operator address

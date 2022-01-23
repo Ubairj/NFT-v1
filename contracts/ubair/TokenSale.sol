@@ -104,7 +104,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @return price - the sale price for the given quantity
     function _salePrice(uint256 tokenId, uint256 quantity) internal view returns (uint256 price) {
         TokenData storage _tokenData = tokenData[tokenId];
-        uint256 targetPricing = (_tokenData.rate * quantity) * 10 ** 18;
+        uint256 targetPricing = (_tokenData.rate * quantity) * 10;
         targetPricing = targetPricing / 10;
         price = targetPricing;
         return price;
