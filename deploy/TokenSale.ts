@@ -10,7 +10,7 @@ export default async function func(hre: any) {
   const d = hre.deployments.deploy;
   const deploy = hre.deployments.deploy;
 
-  console.log('\n\nNextgem - bank deploy\n');
+  console.log('\n\nNextgem - token sale deploy\n');
 
   const owner = await hre.ethers.getSigner();
   const ownerAddress = await owner.getAddress();
