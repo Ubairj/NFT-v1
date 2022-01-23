@@ -71,7 +71,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
 
     function purchase(uint256 tokenHash, address _receiver, uint256 quantity) external payable override returns (TokenMinting memory mintings) {
         address receiver = _receiver;
-        TokenData storage _tokenData = tokenData[tokenHash];
+        TokenData memory _tokenData = tokenData[tokenHash];
         require(_tokenData.id == tokenHash, "invalid object");
 
         uint256 salePrice_ = _salePrice(tokenHash, quantity);
@@ -103,11 +103,8 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @param quantity - the quantity to purchase. max 5.
     /// @return price - the sale price for the given quantity
     function _salePrice(uint256 tokenId, uint256 quantity) internal view returns (uint256 price) {
-        TokenData storage _tokenData = tokenData[tokenId];
-        uint256 targetPricing = (_tokenData.rate * quantity) * 10;
-        targetPricing = targetPricing / 10;
-        price = targetPricing;
-        return price;
+        TokenData memory _tokenData = tokenData[tokenId];
+        return (_tokenData.price * quantity);
     }
 
     function salePrice(uint256 tokenId, uint256 quantity) external view override returns (uint256 price) {
@@ -150,7 +147,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @notice get the token sale price
     /// @return salePrice - the open state of the tokensale
     function getSalePrice(uint256 tokenHash) external view override returns (uint256) {
-        return tokenData[tokenHash].rate;
+        return tokenData[tokenHash].price;
     }
 
     /// @notice set the psale price

@@ -11,7 +11,7 @@ interface ITokenSale {
         uint256 id;
         uint256 supply;
         uint256 minted;
-        uint256 rate;
+        uint256 price;
         bool openState;
     }
 
