@@ -32,8 +32,8 @@ ERC1155Owners,
 ERC1155Owned,
 ERC1155TotalBalance,
 IMultiToken,
+ERC2981,
 Controllable
-
 
 {
 
@@ -94,7 +94,7 @@ Controllable
 
     /// @notice See {IERC165-supportsInterface}. ERC165 implementor. identifies this contract as an ERC1155
     /// @param interfaceId the interface id to check
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC1155) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC1155, ERC2981) returns (bool) {
         return
             interfaceId == type(IERC1155Owners).interfaceId ||
             interfaceId == type(IERC1155Owned).interfaceId ||
@@ -159,6 +159,13 @@ Controllable
             }
 
         }
+
     }
+
+    function withdraw() public onlyController {
+        require(address(this).balance > 0, "Balance is 0");
+        payable(msg.sender).transfer(address(this).balance);
+    }
+
 
 }
