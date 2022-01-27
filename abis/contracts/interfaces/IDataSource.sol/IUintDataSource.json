@@ -1,0 +1,5 @@
+[
+  "event IntDataSourceSet(string,string)",
+  "function getInt(uint256) view returns (uint256)",
+  "function setInt(uint256,uint256)"
+]

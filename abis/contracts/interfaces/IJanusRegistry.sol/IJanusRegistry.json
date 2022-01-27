@@ -1,0 +1,4 @@
+[
+  "function get(string,string) view returns (address)",
+  "function member(address) view returns (string, string)"
+]

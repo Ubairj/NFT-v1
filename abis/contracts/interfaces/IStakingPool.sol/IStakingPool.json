@@ -1,0 +1,3 @@
+[
+  "function stakedToken() view returns (tuple(uint8,uint256,address))"
+]

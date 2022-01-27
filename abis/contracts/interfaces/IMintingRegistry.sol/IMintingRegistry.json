@@ -1,0 +1,12 @@
+[
+  "event MintRegistered(address indexed,uint256,uint256)",
+  "function collection(uint256) view returns (uint256)",
+  "function collectionMinter(uint256) view returns (address)",
+  "function collections() view returns (uint256[])",
+  "function members(uint256) view returns (uint256[])",
+  "function minted(address) view returns (uint256[])",
+  "function minter(uint256) view returns (address)",
+  "function minters() view returns (address[])",
+  "function register(address,uint256,uint256)",
+  "function tokens() view returns (uint256[])"
+]

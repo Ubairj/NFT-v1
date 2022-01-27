@@ -1,0 +1,9 @@
+[
+  "event LootAdded(address indexed,uint256 indexed,tuple(address,uint8,uint8,uint256),tuple(tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256),uint256,uint256,uint256,uint256,uint256))",
+  "event LootMinted(address indexed,uint256 indexed,tuple(address,uint8,uint8,uint256),tuple(tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256),uint256,uint256,uint256,uint256,uint256))",
+  "event LootboxOpened(address indexed,address indexed,tuple(address,uint8,uint8,uint256),tuple(tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256),uint256,uint256,uint256,uint256,uint256)[])",
+  "event LootboxTokensMinted(address indexed,uint256 indexed,tuple(address,uint8,uint8,uint256),uint256)",
+  "function addLoot(tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256))",
+  "function open() payable returns (tuple(tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256),uint256,uint256,uint256,uint256,uint256)[])",
+  "function setLoot(uint256,tuple(address,uint256,uint256,string,string,string,uint8,uint256,bool,uint256,uint256,uint256))"
+]

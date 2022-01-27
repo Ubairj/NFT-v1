@@ -1,0 +1,5 @@
+[
+  "event StringDataSourceSet(string,string)",
+  "function getStr(uint256) view returns (string)",
+  "function setStr(uint256,string) returns (string)"
+]

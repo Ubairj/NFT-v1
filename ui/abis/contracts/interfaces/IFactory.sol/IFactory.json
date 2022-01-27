@@ -1,0 +1,8 @@
+[
+  "event InstanceCreated(address,address,tuple(address,address))",
+  "function at(uint256) view returns (tuple(address,address))",
+  "function contractBytes() view returns (bytes)",
+  "function count() view returns (uint256)",
+  "function create(address,uint256) returns (tuple(address,address))",
+  "function instances() view returns (tuple(address,address)[])"
+]

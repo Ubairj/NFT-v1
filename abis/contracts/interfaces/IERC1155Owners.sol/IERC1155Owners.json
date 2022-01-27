@@ -1,0 +1,4 @@
+[
+  "function isOwnedBy(uint256,address) view returns (bool)",
+  "function ownersOf(uint256) view returns (address[])"
+]

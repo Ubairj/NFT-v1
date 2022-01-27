@@ -1,0 +1,5 @@
+[
+  "event AddressDataSourceSet(string,string)",
+  "function getAddress(uint256) view returns (address)",
+  "function setAddress(uint256,address)"
+]

@@ -1,0 +1,18 @@
+[
+  "event PayeeChanged(address indexed)",
+  "event Purchased(address indexed,uint256,uint256,uint256)",
+  "event TokenMinted(address indexed,uint256,uint256)",
+  "function addTokenType(tuple(uint256,uint256,uint256,uint256,bool))",
+  "function getOpenState(uint256) view returns (bool)",
+  "function getPayee() view returns (address)",
+  "function getSaleTokens() view returns (address[])",
+  "function getTokenType(uint256) view returns (tuple(uint256,uint256,uint256,uint256,bool))",
+  "function mint(uint256,address,uint256)",
+  "function minterList() view returns (tuple(address,uint256,uint256)[])",
+  "function purchase(uint256,address,uint256) payable returns (tuple(address,uint256,uint256)[])",
+  "function purchaserList() view returns (tuple(address,uint256,uint256)[])",
+  "function salePrice(uint256,uint256) view returns (uint256)",
+  "function setOpenState(uint256,bool)",
+  "function setPayee(address)",
+  "function setSalePrice(uint256)"
+]

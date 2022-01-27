@@ -1,0 +1,5 @@
+[
+  "function getPurchaseRecord(uint256) view returns (tuple(address,address,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "function getPurchaseRecordCount() view returns (uint256)",
+  "function getPurchaseRecords() view returns (tuple(address,address,uint256,uint256,uint256,uint256,uint256,uint256)[])"
+]

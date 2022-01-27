@@ -1,0 +1,5 @@
+[
+  "event FeeChanged(address indexed,string indexed,uint256)",
+  "function fee(string) view returns (uint256)",
+  "function setFee(string,uint256)"
+]

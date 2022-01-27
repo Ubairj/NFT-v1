@@ -1,0 +1,7 @@
+[
+  "event LockerContentsDroppedOff(address,address,uint256,uint256)",
+  "event LockerContentsPickedUp(address,address,uint256,uint256)",
+  "function contents(uint256) view returns (tuple(address,uint256,address,uint256,uint256))",
+  "function dropOff(address,uint256,address,uint256,uint256)",
+  "function pickUpTokenWithKey(uint256)"
+]

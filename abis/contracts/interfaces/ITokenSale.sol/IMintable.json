@@ -1,0 +1,4 @@
+[
+  "function getMinter() view returns (address)",
+  "function mint(address,uint256,uint256)"
+]

@@ -1,0 +1,4 @@
+[
+  "function deposit() payable returns (uint256)",
+  "function withdraw(uint256) returns (uint256)"
+]

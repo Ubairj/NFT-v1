@@ -141,13 +141,13 @@ const config = {
   mocha: {
     timeout: 0,
   },
-  // abiExporter: {
-  //   path: './abis',
-  //   clear: false,
-  //   flat: true,
-  //   pretty: true,
-  //   runOnCompile: true
-  // }
+  abiExporter: {
+    path: './abis',
+    clear: false,
+    flat: false,
+    pretty: true,
+    runOnCompile: true
+  }
 };
 
 module.exports = config;

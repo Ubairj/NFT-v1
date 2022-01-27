@@ -1,0 +1,6 @@
+[
+  "event MinterBurned(address,uint256,uint256)",
+  "event MinterMinted(address,uint256,uint256)",
+  "function burn(address,uint256,uint256)",
+  "function mint(address,uint256,uint256)"
+]

@@ -1,0 +1,6 @@
+[
+  "function getItemAt(uint256) view returns (address)",
+  "function getItemCount() view returns (uint256)",
+  "function getItems() view returns (uint256[])",
+  "function isMemberItem(uint256) view returns (bool)"
+]

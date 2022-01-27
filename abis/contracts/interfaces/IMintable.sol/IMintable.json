@@ -1,0 +1,5 @@
+[
+  "event MinterMinted(address,uint256,uint256)",
+  "function getMinter() view returns (address)",
+  "function mint(address,uint256,uint256)"
+]

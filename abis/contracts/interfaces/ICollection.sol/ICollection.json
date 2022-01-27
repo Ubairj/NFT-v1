@@ -1,0 +1,4 @@
+[
+  "function isMemberOf(uint256) view returns (bool)",
+  "function members() view returns (uint256[])"
+]

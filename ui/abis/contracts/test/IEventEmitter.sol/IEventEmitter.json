@@ -1,0 +1,4 @@
+[
+  "event EventEmitterEvent(string indexed,string indexed,uint256)",
+  "function emitEvent(string,string)"
+]
