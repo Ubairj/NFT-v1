@@ -202,6 +202,7 @@ export class BlockchainService {
     ];
 
     try {
+      // get the contracts
       const [token, tokenSale] = await Promise.all([
         this.getContractRef(tokenAbi, environment.token),
         this.getContractRef(tokenSaleAbi, environment.tokenSale)
@@ -212,6 +213,17 @@ export class BlockchainService {
 
       // the bitgem pool factory
       this.tokenSale = tokenSale;
+
+      // token minted event
+      this.tokenSale.on('TokenMinted', (minter: string, hash: any, quantity: any) => {
+        if(!this.account || !BigNumber.from(minter).eq(this.account)) {
+          return;
+        }
+        this.showSidebarMessage(
+          'You have received a new token!'
+        );
+      })
+
     } catch (e) {
       invalidNetwork();
     }
