@@ -37,6 +37,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
 
         tokenData[tokenType.id] = tokenType;
 
+
     }
 
 
@@ -186,5 +187,10 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
     /// @notice set sale price
     function setSalePrice(uint256) external pure override {
         require(false, "this method is not implemented");
+    }
+
+        function withdraw() public onlyController {
+        require(address(this).balance > 0, "Balance is 0");
+        payable(msg.sender).transfer(address(this).balance);
     }
 }
