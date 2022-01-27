@@ -1,0 +1,8 @@
+[
+  "event ClaimCreated(address indexed,address indexed,tuple(uint256,uint256,address,address,address,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "event ClaimRedeemed(address indexed,address indexed,tuple(uint256,uint256,address,address,address,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "function claims() view returns (tuple(uint256,uint256,address,address,address,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)[])",
+  "function collectClaim(uint256,bool)",
+  "function createClaim(tuple(uint256,uint256,address,address,address,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)) payable returns (tuple(uint256,uint256,address,address,address,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "function nextClaimHash() view returns (uint256)"
+]

@@ -1,0 +1,5 @@
+[
+  "function getRandomBytes(uint8) returns (bytes32[])",
+  "function getRandomNumber(uint256,uint256) returns (uint256)",
+  "function getRandomUints(uint8) returns (uint256[])"
+]

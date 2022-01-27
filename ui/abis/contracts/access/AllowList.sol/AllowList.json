@@ -1,0 +1,5 @@
+[
+  "event AllowedSet(address,address,bool)",
+  "function isAllowed(address) view returns (bool)",
+  "function setAllowed(address,bool)"
+]

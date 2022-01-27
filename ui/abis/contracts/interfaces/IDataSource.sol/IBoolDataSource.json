@@ -1,0 +1,5 @@
+[
+  "event BoolDataSourceSet(string,string)",
+  "function getBool(uint256) view returns (bool)",
+  "function setBool(uint256,bool)"
+]

@@ -1,0 +1,12 @@
+[
+  "event Banned(address indexed)",
+  "event Penalized(address indexed,uint256)",
+  "event Updated(address indexed,tuple(address,address,uint256))",
+  "event ValidatorRegistered(address indexed,uint256,uint256)",
+  "event ValidatorUnregistered(address indexed,uint256)",
+  "function bondAmount() view returns (uint256)",
+  "function register(address) payable",
+  "function registered(address) view returns (bool)",
+  "function unregister(address)",
+  "function validator(address) view returns (tuple(address,address,uint256))"
+]

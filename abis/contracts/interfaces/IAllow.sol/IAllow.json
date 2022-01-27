@@ -1,0 +1,5 @@
+[
+  "event Approved(address indexed,address,uint256,uint256)",
+  "function allow(address,uint256,uint256)",
+  "function allowance(address,address,uint256) view returns (uint256)"
+]

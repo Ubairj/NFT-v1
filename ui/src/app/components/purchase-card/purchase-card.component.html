@@ -4,7 +4,7 @@
           <h4 class="card-title">Purchase Tokens</h4>
           <h6 class="text-muted card-subtitle mb-2">this is a subheading</h6>
           <p class="card-text">Click purchase to purchase tokens</p>
-          <div class="input-group"><span class="input-group-text">quantity</span><input class="form-control" type="number"><button class="btn btn-primary" (click)="buyNowClicked()" type="button">Buy Now</button></div>
+          <div class="input-group"><span class="input-group-text">quantity</span><input class="form-control" type="number" [(ngModel)]="quantity"><button class="btn btn-primary" (click)="buyNowClicked()" type="button">Buy Now</button></div>
       </div>
   </div>
 </div>

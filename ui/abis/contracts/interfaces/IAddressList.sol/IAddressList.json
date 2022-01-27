@@ -1,0 +1,4 @@
+[
+  "function addresses() view returns (address[])",
+  "function isMemberAddress(address) view returns (bool)"
+]

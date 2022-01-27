@@ -1,0 +1,22 @@
+[
+  "event TokenAddressDataDeleted(uint256,string)",
+  "event TokenAddressDataUpdated(uint256,string,address)",
+  "event TokenBoolDataDeleted(uint256,string)",
+  "event TokenBoolDataUpdated(uint256,string,bool)",
+  "event TokenBytesDataDeleted(uint256,string)",
+  "event TokenBytesDataUpdated(uint256,string,bytes)",
+  "event TokenStringDataDeleted(uint256,string)",
+  "event TokenStringDataUpdated(uint256,string,string)",
+  "event TokenUInt256DataDeleted(uint256,string)",
+  "event TokenUInt256DataUpdated(uint256,string,uint256)",
+  "function getAddressData(uint256,string) view returns (address)",
+  "function getBoolData(uint256,string) view returns (bool)",
+  "function getBytesData(uint256,string) view returns (bytes)",
+  "function getStringData(uint256,string) view returns (string)",
+  "function getUInt256Data(uint256,string) view returns (uint256)",
+  "function setAddressData(uint256,string,address) payable",
+  "function setBoolData(uint256,string,bool) payable",
+  "function setBytesData(uint256,string,bytes) payable",
+  "function setStringData(uint256,string,string) payable",
+  "function setUInt256Data(uint256,string,uint256) payable"
+]

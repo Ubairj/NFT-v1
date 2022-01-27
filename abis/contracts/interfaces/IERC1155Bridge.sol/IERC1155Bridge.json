@@ -1,0 +1,12 @@
+[
+  "event NetworkTransferCancelled(uint256 indexed,tuple(uint256,address,address,uint32,uint256,uint256,bytes,uint8))",
+  "event NetworkTransferConfirmed(uint256 indexed,tuple(uint256,address,address,uint32,uint256,uint256,bytes,uint8))",
+  "event NetworkTransferStarted(uint256 indexed,tuple(uint256,address,address,uint32,uint256,uint256,bytes,uint8))",
+  "event TransferNetworkERC1155(uint256,uint256,address indexed,address indexed,address indexed,uint256,uint256)",
+  "function cancel(uint256)",
+  "function confirm(uint256)",
+  "function get(uint256) view returns (tuple(uint256,address,address,uint32,uint256,uint256,bytes,uint8))",
+  "function networkTransferFrom(address,address,uint256,uint256,uint256,bytes)",
+  "function token() view returns (address)",
+  "function transfer(uint256,tuple(uint256,address,address,uint32,uint256,uint256,bytes,uint8))"
+]

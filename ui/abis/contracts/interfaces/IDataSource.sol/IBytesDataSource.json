@@ -1,0 +1,5 @@
+[
+  "event BytesDataSourceSet(string,string)",
+  "function getBytes(uint256) view returns (bytes)",
+  "function setBytes(uint256,bytes)"
+]

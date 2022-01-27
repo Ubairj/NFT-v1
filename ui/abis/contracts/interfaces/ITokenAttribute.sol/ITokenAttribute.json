@@ -1,0 +1,11 @@
+[
+  "event AttributeAdded(tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))",
+  "event AttributeRemoved(tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))",
+  "event AttributeUpdated(tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))",
+  "function add(uint256,tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool)) returns (uint256)",
+  "function all(uint256) view returns (tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool)[])",
+  "function count(uint256) view returns (uint256)",
+  "function get(uint256,uint256) view returns (tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))",
+  "function remove(uint256,uint256) returns (tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))",
+  "function set(uint256,uint256,tuple(string,uint8,string,uint256,bytes32,address,bool,string,uint256,bytes32,address,bool))"
+]

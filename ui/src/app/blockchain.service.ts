@@ -58,6 +58,8 @@ export class BlockchainService {
   networkId = 0;
   user: Moralis.User | undefined;
 
+  currentTokenHash = 1;
+
   tokenSale: any;
   token: any;
 
@@ -89,9 +91,9 @@ export class BlockchainService {
 
   async connectAccount(): Promise<void> {
     this.resetApp();
-    const externalProvider: any = (await Moralis.Web3.enable()).currentProvider;
-    if (externalProvider) {
-      this.provider = new providers.Web3Provider(externalProvider);
+    await Moralis.enableWeb3();
+    if (Moralis.provider) {
+      this.provider = new providers.Web3Provider((Moralis as any).provider);
       await this.subscribeProvider();
       await this.setupAccount();
     }
@@ -166,42 +168,69 @@ export class BlockchainService {
       'Please wait while your token information is loaded.'
     );
 
+    const tokenSaleAbi = [
+      "event PayeeChanged(address indexed)",
+      "event Purchased(address indexed,uint256,uint256,uint256)",
+      "event TokenMinted(address indexed,uint256,uint256)",
+      "function addTokenType(tuple(uint256,uint256,uint256,uint256,bool))",
+      "function getOpenState(uint256) view returns (bool)",
+      "function getPayee() view returns (address)",
+      "function getSalePrice(uint256) view returns (uint256)",
+      "function getSaleTokens() view returns (address[])",
+      "function getTokenType(uint256) view returns (tuple(uint256,uint256,uint256,uint256,bool))",
+      "function mint(uint256,address,uint256)",
+      "function minterList() view returns (tuple(address,uint256,uint256)[])",
+      "function purchase(uint256,address,uint256) payable returns (tuple(address,uint256,uint256))",
+      "function purchaserList() view returns (tuple(address,uint256,uint256)[])",
+      "function salePrice(uint256,uint256) view returns (uint256)",
+      "function setOpenState(uint256,bool)",
+      "function setPayee(address)",
+      "function setSalePrice(uint256) view"
+    ];
+    const tokenAbi = [
+      "event ApprovalForAll(address indexed,address indexed,bool)",
+      "event TransferBatch(address indexed,address indexed,address indexed,uint256[],uint256[])",
+      "event TransferSingle(address indexed,address indexed,address indexed,uint256,uint256)",
+      "event URI(string,uint256 indexed)",
+      "function balanceOf(address,uint256) view returns (uint256)",
+      "function balanceOfBatch(address[],uint256[]) view returns (uint256[])",
+      "function isApprovedForAll(address,address) view returns (bool)",
+      "function safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+      "function safeTransferFrom(address,address,uint256,uint256,bytes)",
+      "function setApprovalForAll(address,bool)",
+      "function supportsInterface(bytes4) view returns (bool)"
+    ];
+
     try {
-      this.contractData = await import(`../../abis/${this.networkId}/abis.json`);
+      const [token, tokenSale] = await Promise.all([
+        this.getContractRef(tokenAbi, environment.token),
+        this.getContractRef(tokenSaleAbi, environment.tokenSale)
+      ]);
+
+      // the primary bitgem multitoken
+      this.token = token;
+
+      // the bitgem pool factory
+      this.tokenSale = tokenSale;
     } catch (e) {
-      this.isLoading = false;
-      return invalidNetwork();
+      invalidNetwork();
     }
 
-    const [token, tokenSale] = await Promise.all([
-      this.getContractRef('MultiToken'),
-      this.getContractRef('TokenSale')
-    ]);
-
-    // the primary bitgem multitoken
-    this.token = token;
-
-    // the bitgem pool factory
-    this.tokenSale = tokenSale;
   }
 
   /**
    * load a contract given its details.
    */
   async getContractRef(
-    contract: string,
-    address?: string,
-    version?: number
+    abi: any,
+    address: string,
   ): Promise<Contract> {
-    version = version === undefined ? this.contractData.length - 1 : version;
-    const tokenData = await require(`../../../abis/${contract}.json`);
-    if (!tokenData.abi) throw new Error(`abi not found for ${contract}`);
-    tokenData.__contract = new Contract( // this could be cached
-      address ? address : tokenData.address,
-      tokenData.abi,
+    const __contract = new Contract( // this could be cached
+      address,
+      abi,
       this.signer
     );
-    return tokenData.__contract;
+    return __contract;
   }
 
   /**
@@ -230,25 +259,17 @@ export class BlockchainService {
     });
   }
 
-  async purchaseTokens(): Promise<void> {
-
-    // currently-sold token hash
-    const currentToken = environment.token;
+  async purchaseTokens(quantity: number): Promise<void> {
 
     this.showSidebarMessage('Please wait while your purchase is being processed.');
-    // get quantity of tokens to purchase from input
-    const quantity = parseInt(
-      (document.getElementById('quantity') as HTMLInputElement).value,
-      10
-    );
 
     // get the price of tokens to purchase from the contract
-    const price = await this.tokenSale.salePrice(currentToken);
+    const price = await this.tokenSale.salePrice(environment.currentTokenHash, quantity);
     // get the amount of ether to send to the contract
     const amount = price.mul(quantity);
 
     // send the transaction
-    const tx = await this.tokenSale.purchaseTokens(currentToken, quantity, {
+    const tx = await this.tokenSale.purchase(environment.currentTokenHash, this.account, quantity, {
       value: amount
     });
 

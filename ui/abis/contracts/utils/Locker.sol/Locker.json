@@ -1,0 +1,17 @@
+[
+  "event LockerContentsDroppedOff(address,address,uint256,uint256)",
+  "event LockerContentsPickedUp(address,address,uint256,uint256)",
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "function contents(uint256) view returns (tuple(address,uint256,address,uint256,uint256))",
+  "function dropOff(address,uint256,address,uint256,uint256)",
+  "function onERC1155BatchReceived(address,address,uint256[],uint256[],bytes) returns (bytes4)",
+  "function onERC1155Received(address,address,uint256,uint256,bytes) returns (bytes4)",
+  "function onERC721Received(address,address,uint256,bytes) returns (bytes4)",
+  "function owner() view returns (address)",
+  "function pickUpTokenWithKey(uint256)",
+  "function renounceOwnership()",
+  "function setFee(uint256)",
+  "function supportsInterface(bytes4) view returns (bool)",
+  "function transferOwnership(address)",
+  "function withdraw(address)"
+]

@@ -1,0 +1,10 @@
+[
+  "function addProxy(address)",
+  "function addRegistryManager(address)",
+  "function allProxiesCount() view returns (uint256)",
+  "function isProxy(address) view returns (bool)",
+  "function isRegistryManager(address) view returns (bool)",
+  "function proxyAt(uint256) view returns (address)",
+  "function removeProxy(address)",
+  "function removeRegistryManager(address)"
+]

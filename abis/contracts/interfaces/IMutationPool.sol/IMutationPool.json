@@ -1,0 +1,7 @@
+[
+  "event MutationPoolDeposited(address,tuple(uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "event MutationPoolWithdrew(address,tuple(uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256))",
+  "function deposits() view returns (tuple(uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256)[])",
+  "function depositsByDepositor(address) view returns (tuple(uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint256)[])",
+  "function directives() view returns (tuple(uint8,string,uint256,bool)[])"
+]

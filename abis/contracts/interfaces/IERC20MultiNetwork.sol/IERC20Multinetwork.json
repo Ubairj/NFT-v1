@@ -1,0 +1,4 @@
+[
+  "event TransferNetworkERC20(uint256,uint256,address indexed,address indexed,address indexed,uint256)",
+  "function networkTransferFrom(address,address,uint256,uint256)"
+]

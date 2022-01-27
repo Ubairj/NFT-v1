@@ -1,0 +1,6 @@
+[
+  "function givePermission(address,bytes32)",
+  "function isPermissioned(bytes32) view returns (bool)",
+  "function isSuperAdmin() view returns (bool)",
+  "function takePermission(address,bytes32)"
+]
