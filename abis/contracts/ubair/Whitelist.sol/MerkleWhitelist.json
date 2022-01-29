@@ -1,0 +1,10 @@
+[
+  "event MinterMinted(address,uint256,uint256)",
+  "function addressToPublicMinted(address) view returns (uint16)",
+  "function addressToWhitelistMinted(address) view returns (uint16)",
+  "function isWhitelisted(address,bytes32[]) view returns (bool)",
+  "function whitelistMint(uint256,bytes32[],uint256) payable",
+  "function whitelistSaleEnabled() view returns (bool)",
+  "function whitelistSaleIsEnabled() view returns (bool)",
+  "function whitelistSaleTime() view returns (uint256)"
+]

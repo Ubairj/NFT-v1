@@ -5,9 +5,11 @@ import "@openzeppelin/contracts/interfaces/IERC165.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "../access/Controllable.sol";
 import "./ITokenSale.sol";
+import "./Whitelist.sol";
+
 
 /// tokensale implementation
-contract TokenSale is ITokenSale, Controllable, Initializable {
+contract TokenSale is ITokenSale, Controllable, MerkleWhitelist, Initializable {
 
     address private payee;
     address private token;
@@ -27,7 +29,7 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
 
     /// @dev called after constructor once to init stuff
     function initialize(address _token) public initializer {
-        token = _token;
+        token = tokenAddress = _token;
     }
 
     /// @notice add a new token type to this token sale.
@@ -131,6 +133,15 @@ contract TokenSale is ITokenSale, Controllable, Initializable {
         emit TokenMinted(receiver, tokenHash, 1);
     }
 
+    /// @notice ale price
+    function _salePrice(uint256 tokenHash) internal virtual override returns(uint256) {
+        return _salePrice(tokenHash, 1);
+    }
+
+    /// @notice max tokens
+    function _maxTokens(uint256 tokenHash) internal virtual override returns(uint256) {
+        return tokenData[tokenHash].supply;
+    }
 
     /// @notice open / close the tokensale
     /// only for controller of token

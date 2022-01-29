@@ -11,6 +11,7 @@ import "../token/ERC1155Owners.sol";
 import "../token/ERC1155Owned.sol";
 import "../token/ERC1155TotalBalance.sol";
 import "../royalties/ERC2981.sol";
+import "../ubair/Whitelist.sol";
 
 
 import "../interfaces/IMultiToken.sol";
@@ -24,7 +25,7 @@ import "../access/Controllable.sol";
  * @notice the multitoken contract. All tokens are printed on this contract. The token has all the capabilities
  * of an erc1155 contract, plus network transfer, royallty tracking and assignment and other features.
  */
- 
+
 contract MultiToken is
 ERC1155,
 ProxyRegistryManager,
@@ -34,7 +35,6 @@ ERC1155TotalBalance,
 IMultiToken,
 ERC2981,
 Controllable
-
 {
 
     // to work with token holder and held token lists
@@ -166,6 +166,5 @@ Controllable
         require(address(this).balance > 0, "Balance is 0");
         payable(msg.sender).transfer(address(this).balance);
     }
-
 
 }
